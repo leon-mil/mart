@@ -38,7 +38,7 @@ def ping3(host):
     except subprocess.CalledProcessError:
         response = None
 
-def ping4(host) -> is_up:
+def ping4(host):
     with open(os.devnull, 'w') as DEVNULL:
         try:
             result = subprocess.check_call(
