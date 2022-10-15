@@ -99,19 +99,49 @@ def ping4(host):
 def fileExists(filename):
     
     with open('logs/files.log', 'a') as file_log: 
+        
         command = ['ls', '-ltr', filename]
         
         try:
-            result = subprocess.run(
+            result = subprocess.run (
                 command, 
-                capture_output=True,    # If capture_output is true, stdout and stderr will be captured.
+                capture_output=False,   # If capture_output is true, stdout and stderr will be captured.
                 text=True,              # If text mode is not used, stdin, stdout and stderr will be opened as binary streams. We will need to use.decode().
                 check=True,             # If returncode is non-zero, raise a CalledProcessError.
-                stdout=file_log
+                stdout=file_log,
+                stderr=file_log
             )
+            file_exists = (result.returncode == 0)
         except subprocess.CalledProcessError as e:
-            print(e.stderr)
+            file_exists = False
+            file_log.write('STD ERR: ' + str(e.stderr) + '\n')
+            file_log.write('STD OUT: ' + str(e.stdout) + '\n')
+
+        return (file_exists)
+
+def fileExistsDateRange(filename, dtstart, dtend):
     
-    return (result.returncode == 0)
-    
+    with open('logs/files.log', 'a') as file_log: 
+        
+        date_start = dtstart
+        date_end = dtend
+        
+        command = ['ls', '-ltr', filename]
+        
+        try:
+            result = subprocess.run (
+                command, 
+                capture_output=False,   # If capture_output is true, stdout and stderr will be captured.
+                text=True,              # If text mode is not used, stdin, stdout and stderr will be opened as binary streams. We will need to use.decode().
+                check=True,             # If returncode is non-zero, raise a CalledProcessError.
+                stdout=file_log,
+                stderr=file_log
+            )
+            file_exists = (result.returncode == 0)
+        except subprocess.CalledProcessError as e:
+            file_exists = False
+            file_log.write('STD ERR: ' + str(e.stderr) + '\n')
+            file_log.write('STD OUT: ' + str(e.stdout) + '\n')
+
+        return (file_exists)
     
