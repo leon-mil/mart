@@ -1,0 +1,18 @@
+PING cnn.com (151.101.67.5): 56 data bytes
+64 bytes from 151.101.67.5: icmp_seq=0 ttl=58 time=17.561 ms
+
+--- cnn.com ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 17.561/17.561/17.561/0.000 ms
+PING google.com (142.251.40.110): 56 data bytes
+64 bytes from 142.251.40.110: icmp_seq=0 ttl=119 time=21.551 ms
+
+--- google.com ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 21.551/21.551/21.551/0.000 ms
+PING yahoo.com (98.137.11.164): 56 data bytes
+64 bytes from 98.137.11.164: icmp_seq=0 ttl=55 time=88.337 ms
+
+--- yahoo.com ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 88.337/88.337/88.337/0.000 ms
