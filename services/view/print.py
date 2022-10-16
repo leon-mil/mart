@@ -1,7 +1,6 @@
 #! /usr/local/bin/python3
 
-from library.definitions.display.decorator import *
-# from termcolor import colored
+from lib.deff.view.decor import *
 
 def print1(*args, title):
     
@@ -19,8 +18,17 @@ def print1(*args, title):
     print(*args)
     
 def print2(**kwargs):
-    
     #kwargs = { '{} {}'.format(header, key) for key in kwargs }
     
-    for host in kwargs:
-        print('{} {}'.format(host, kwargs[host]))
+    right_aligned_dict = { host.rjust(13): state.rjust(14) for host, state in kwargs.items()}
+    
+    # for key,value in kwargs.items():
+    #     print("{0:20}{1:5d}".format(key,value))
+
+    for host, state in right_aligned_dict.items():
+        print(host + ": " + state)
+    
+    # for host in kwargs:
+    #     print('{0:10} {1:30}'.format(host, kwargs[host]))
+        
+    print('\n')
