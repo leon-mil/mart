@@ -2,7 +2,7 @@
 
 #region imports
 # Ping functionality
-from services.net.diag import *
+from services.net.diag_server import *
 
 # Decorator functions
 from lib.deff.view.decor import *

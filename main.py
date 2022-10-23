@@ -3,22 +3,8 @@
 import os
 from services.da.get import *
 from services.da.repos import *
-from services.utils.timer import *
+from services.utils.decorators.timer import *
 
-
-# fn = 'file*'
-# dir = '~/dev/work/marts/test/'
-# ds = "'2022-10-11 10:00:00'"
-# dn = "'2022-10-11 13:00:00'"
-
-# filename = '~/dev/work/marts/test/file*'
-# date_start = '2022-10-11 10:00:00'
-# date_end = '2022-10-11 13:00:00'
-
-#  p1 = fileExistsDateRange(filename, ds, dn)
-
-# print('STDERR: \n' + 'No Errors \n' if (len(p1.stderr)==0) else p1.stderr + '\n' )
-# print('STDOUT: \n' + p1.stdout)
        
 # d1 = dt.date.today()
 # print(d1)
@@ -55,14 +41,32 @@ from services.utils.timer import *
 # for i in range((end_date - start_date).days):
 #     print(start_date + i*day_delta)
 
+
+##############################################
+# Control
+##############################################
+flag_ping_hosts = False
+flag_get_ripo   = False
+flag_get_logs   = True
+
 ###############################################
 # Ping Hosts
 ###############################################
-import subs.ping_hosts as ph
-ph.print_ping_results()
+if flag_ping_hosts: 
+    import subs.ping_hosts as ph
+    ph.print_ping_results()
 
 ###############################################
 # Get Ripo
 ###############################################
-import subs.get_repos as gr
-gr.get_repos()
+if flag_get_ripo:
+    import subs.get_repos as gr
+    gr.get_repos()
+
+###############################################
+# Logs
+###############################################
+if flag_get_logs:
+    import subs.check_logs as cl
+    result = cl.check_logs(f1=False, f2=False, f3=True, f4=True)
+    print('File: \'main\' commulitave return of f1, f2 and f3 is: {} \n'.format(result))
