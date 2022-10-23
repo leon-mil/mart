@@ -7,6 +7,8 @@ from services.utils.run_subprocess import *
 from multipledispatch import dispatch
 from types import * 
 
+
+
 """
       Programer: Leon Mil
            Date: 10/17/2022
@@ -50,10 +52,10 @@ def check_logs(**kargs):
         cmd = ['find', file_dir, '-name', file_name, '-newermt', date_start, '!', '-newermt', date_end, '-ls']
         out = 'logs/files_out.log'
         err = 'logs/files_err.log'
-
+    
         f3 = run(cmd, out, err, stdout=True, stderr=False)
         print('\nFunction \'{}\' returned: {}'.format(run.__name__, f3))
-        print("\nThe wrapped functions docstring is:", run.__doc__)
+        #print("\nThe wrapped functions docstring is:", run.__doc__)
         
     if options.get('f1'): final_return.append(f1)
     if options.get('f2'): final_return.append(f2)

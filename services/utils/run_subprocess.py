@@ -1,17 +1,14 @@
 #! /usr/local/bin/python3
 
-from multiprocessing.connection import wait
-from subprocess import *
-from xmlrpc.client import DateTime
-from multipledispatch import dispatch
-from types import *
-from services.utils.decorators.timer import *
+from services.utils.decorators.header import header_decorator
+from services.utils.decorators.timer import timer_decorator
 
 """
       Programer: Leon Mil
            Date: 10/17/2022
     Description: Returns True if log exits based on date range.
 """
+@header_decorator('')
 @timer_decorator
 def run(command, logout, logerr, stdout=False, stderr=False):
     """Execute a linux command and write results to the log.
@@ -30,7 +27,8 @@ def run(command, logout, logerr, stdout=False, stderr=False):
     Returns:
         bool: True if subprocess.peopen return code was 0 and False otherwise.
     """
-    import datetime as dt
+    from datetime import datetime 
+    from subprocess import Popen, PIPE, STDOUT, CalledProcessError
     from io import StringIO
     
     with open(logout, "at") as file_out_log, \
@@ -43,13 +41,13 @@ def run(command, logout, logerr, stdout=False, stderr=False):
                         universal_newlines = True)
             
             # stdout 
-            file_out_log.write(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+            file_out_log.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
             for line in popen.stdout: 
                 file_out_log.write(line)
                 print(line, end = '') if stdout else StringIO().write(line)
              
              # stderr 
-            file_err_log.write(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")  
+            file_err_log.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")  
             for line in popen.stderr: 
                 file_err_log.write(line)
                 print(line, end = '') if stderr else StringIO().write(line)
