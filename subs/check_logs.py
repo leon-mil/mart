@@ -17,7 +17,7 @@ from types import *
 """ 
 def check_logs(**kargs):
     
-    file_dir    = 'test/'
+    file_dir    = 'test'
     file_name   = 'file*'
     date_start  = '2022-10-11 10:00:00'
     date_end    = '2022-10-11 13:00:00'

@@ -27,23 +27,55 @@ import inspect
 #         return timer_decorator_inner
 #     return timer_decorator_outter
 
-def timer_decorator(func): 
+# def timer_decorator(func): 
+#     @wraps(func)
+#     def wrapper(*args, **kwargs):
+        
+#         # start timer
+#         start = dt.datetime.now()
+        
+#         # execute function
+#         response = func(*args, **kwargs)
+        
+#         # end timer
+#         end = dt.datetime.now()
+        
+#         # calculate time difference
+#         delta_cal = end - start
+        
+#         print('\nFunction \'{}\' executed in [sec]:[msec]: [{}]:[{}]'.format(wrapper.__name__, delta_cal.seconds, delta_cal.microseconds))
+        
+#         return response
+#     return wrapper
+
+def timer_decorator(func):
+    import time
+    import timeit
     @wraps(func)
     def wrapper(*args, **kwargs):
         
-        # start timer
-        start = dt.datetime.now()
+        # CPU execution start time:
+        start_time_cpu = time.process_time()
         
-        # execute function
+         # Wall start time:
+        start_time_wall = dt.datetime.now()
+        
+        ########################################################
+        # Execute main function
         response = func(*args, **kwargs)
+        ########################################################
         
-        # end timer
-        end = dt.datetime.now()
+        # CPU execution time elapsed in sec
+        elapsed_time_cpu = time.process_time() - start_time_cpu
         
-        # calculate time difference
-        delta_cal = end - start
+        # CPU execution time elapsed in msec
+        elapsed_time_msec = elapsed_time_cpu * 1000
         
-        print('\nFunction \'{}\' executed in [sec]:[msec]: [{}]:[{}]'.format(wrapper.__name__, delta_cal.seconds, delta_cal.microseconds))
+        # Wall time end: 
+        elapsed_time_wall = dt.datetime.now() - start_time_wall
+        
+        print('\n  CPU execution time of function \'{}\' in [sec]:[msec]: [{}]:[{}]'.format(wrapper.__name__, elapsed_time_cpu, (elapsed_time_cpu * 1000)))
+        print(' Wall execution time of function \'{}\' in [sec]:[msec]: [{}]:[{}]'.format(wrapper.__name__, elapsed_time_wall.seconds, elapsed_time_wall.microseconds))
         
         return response
     return wrapper
