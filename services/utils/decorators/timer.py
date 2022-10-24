@@ -4,6 +4,7 @@ from functools import wraps
 import datetime as dt
 import inspect
 
+# region commented out
 # def timer_decorator(arg, opt=None):
 #     def timer_decorator_outter(fn):
 #         @wraps(fn)
@@ -47,12 +48,15 @@ import inspect
         
 #         return response
 #     return wrapper
+#endregion
 
 def timer_decorator(func):
     import time
-    import timeit
     @wraps(func)
     def wrapper(*args, **kwargs):
+        
+        # Total time in sec since the Epoch.
+        start_time_epoch = time.time()
         
         # CPU execution start time:
         start_time_cpu = time.process_time()
@@ -67,15 +71,21 @@ def timer_decorator(func):
         
         # CPU execution time elapsed in sec
         elapsed_time_cpu = time.process_time() - start_time_cpu
-        
-        # CPU execution time elapsed in msec
-        elapsed_time_msec = elapsed_time_cpu * 1000
-        
+          
         # Wall time end: 
         elapsed_time_wall = dt.datetime.now() - start_time_wall
         
-        print('\n  CPU execution time of function \'{}\' in [sec]:[msec]: [{}]:[{}]'.format(wrapper.__name__, elapsed_time_cpu, (elapsed_time_cpu * 1000)))
-        print(' Wall execution time of function \'{}\' in [sec]:[msec]: [{}]:[{}]'.format(wrapper.__name__, elapsed_time_wall.seconds, elapsed_time_wall.microseconds))
+        # Epoch elapsed timeL
+        elapsed_time_epoch = time.time() - start_time_epoch
+        elapsed_time_epoch_msec = round(elapsed_time_epoch * 1000)
         
+        fn = wrapper.__name__
+        epoch_hms = time.strftime("%H:%M:%S", time.gmtime(elapsed_time_epoch))
+        epoch_ms = time.strftime("%M:%S", time.gmtime(elapsed_time_epoch))
+        epoch_s = time.strftime("%S", time.gmtime(elapsed_time_epoch))
+        
+        print('\n  CPU execution time of function \'{}\' in [S]:[M]: [{}:{}]'.format(fn, round(elapsed_time_cpu), round((elapsed_time_cpu * 1000))))
+        print(' Wall execution time of function \'{}\' in [S]:[M]: [{}:{}]'.format(fn, round(elapsed_time_wall.seconds), round(elapsed_time_wall.microseconds)))
+        print('Epoch execution time of function \'{}\' in [S]:[M]: [{}:{}]'.format(fn, epoch_s, elapsed_time_epoch_msec))
         return response
     return wrapper
